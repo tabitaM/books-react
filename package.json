@@ -6,6 +6,9 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
+    "chance": "^1.1.7",
+    "concurrently": "^5.3.0",
+    "json-server": "^0.16.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
@@ -13,7 +16,9 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "client": "PORT=3001 react-scripts start",
+    "server": "cd api && node .",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
