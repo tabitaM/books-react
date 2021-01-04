@@ -5,14 +5,17 @@ export default function Home() {
   const baseUrl = 'http://localhost:3000/'
 
   useEffect(() => {
-    async function fetchUserData() {
-      const data = await fetch(baseUrl + 'user')
-      console.log('User data: ', data)
-      setUserData(data)
-      return userData
-    }
-    fetchUserData()
+    fetch(baseUrl + 'user')
+      .then((res) => res.json())
+      .then((result) => {
+        console.log('get user result: ', result)
+        setUserData(result)
+      })
   }, [])
 
-  return <div>Home Page</div>
+  return (
+    <div>
+      Hello, {userData ? userData.first_name + ' ' + userData.last_name : ''}!
+    </div>
+  )
 }
