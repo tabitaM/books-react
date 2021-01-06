@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import { useHistory } from 'react-router-dom'
+import useFetch from '../serices/useFetch'
 
 export default function Home() {
-  const [userData, setUserData] = useState(null)
-  const baseUrl = 'http://localhost:3000/'
-
-  useEffect(() => {
-    fetch(baseUrl + 'user')
-      .then((res) => res.json())
-      .then((result) => {
-        console.log('get user result: ', result)
-        setUserData(result)
-      })
-  }, [])
+  const { data: userData } = useFetch('user')
+  const navigate = useHistory()
 
   return (
     <div>
       Hello, {userData ? userData.first_name + ' ' + userData.last_name : ''}!
+      <Button onClick={() => navigate.push('/dashboard')}> check books </Button>
     </div>
   )
 }
