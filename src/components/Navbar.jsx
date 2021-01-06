@@ -7,6 +7,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import useFetch from '../serices/useFetch'
 import { useHistory } from 'react-router-dom'
+import styled from 'styled-components'
 
 export default function Navbar() {
   const { data: userData } = useFetch('user')
@@ -26,11 +27,14 @@ export default function Navbar() {
       <AppBar position="static">
         <Toolbar>
           <Typography>BOOKS</Typography>
-          <Button onClick={() => navigate.push('/dashboard')} color="inherit">
+          <AllBooksButton
+            onClick={() => navigate.push('/dashboard')}
+            color="inherit"
+          >
             {' '}
             All Books{' '}
-          </Button>
-          <img
+          </AllBooksButton>
+          <ProfileImage
             alt=""
             aria-controls="dropdown"
             onClick={handleClick}
@@ -47,8 +51,22 @@ export default function Navbar() {
             </MenuItem>
             <MenuItem onClick={() => navigate.push('/')}>Logout</MenuItem>
           </Menu>
+          <Typography>
+            {userData ? userData.first_name + ' ' + userData.last_name : ''}
+          </Typography>
         </Toolbar>
       </AppBar>
     </div>
   )
 }
+
+const ProfileImage = styled.img`
+  width: 35px;
+  border-radius: 50px;
+  margin: 0 4px;
+  cursor: pointer;
+`
+
+const AllBooksButton = styled(Button)`
+  margin-left: auto;
+`
