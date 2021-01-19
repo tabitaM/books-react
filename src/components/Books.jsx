@@ -6,7 +6,6 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 import GridListTileBar from '@material-ui/core/GridListTileBar'
 import IconButton from '@material-ui/core/IconButton'
 import InfoIcon from '@material-ui/icons/Info'
-import styled from 'styled-components'
 
 export default function Books() {
   const { data: allBooks } = useFetch('books')
@@ -18,10 +17,7 @@ export default function Books() {
         </GridListTile>
         {allBooks
           ? allBooks.map((book) => (
-              <GridListTile
-                key={book.id}
-                style={{ backgroundColor: 'green', margin: '10px' }}
-              >
+              <GridListTile key={book.id} style={{ margin: '10px' }}>
                 <img src={book.thumbnail} alt="" />
                 <GridListTileBar
                   title={book.title}
