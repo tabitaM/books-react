@@ -1,8 +1,8 @@
-//GOAL: custom hook that makes it easy to make HTTP calls
-
 import { useState, useEffect } from 'react'
 
 export default function useFetch(url) {
+  console.log('Using useFetch for:', url)
+
   const [data, setData] = useState(null)
   const baseUrl = 'http://localhost:3000/'
 
@@ -14,5 +14,6 @@ export default function useFetch(url) {
         setData(result)
       })
   }, [url])
+
   return { data }
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import useFetch from '../serices/useFetch'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import ListSubheader from '@material-ui/core/ListSubheader'
@@ -7,16 +6,15 @@ import GridListTileBar from '@material-ui/core/GridListTileBar'
 import IconButton from '@material-ui/core/IconButton'
 import InfoIcon from '@material-ui/icons/Info'
 
-export default function Books() {
-  const { data: allBooks } = useFetch('books')
+export default function Books({ books }) {
   return (
     <div>
       <GridList cols={5} style={{ width: 'full', height: 'auto' }}>
         <GridListTile cols={5} style={{ height: 'auto' }}>
           <ListSubheader>Books</ListSubheader>
         </GridListTile>
-        {allBooks
-          ? allBooks.map((book) => (
+        {books
+          ? books.map((book) => (
               <GridListTile key={book.id} style={{ margin: '10px' }}>
                 <img src={book.thumbnail} alt="" />
                 <GridListTileBar
