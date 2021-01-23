@@ -7,7 +7,9 @@ import Grid from '@material-ui/core/Grid'
 
 export default function Dashboard() {
   const { data: allBooks } = useFetch('books')
+  const { data: categories } = useFetch('categories')
   const [books, setBooks] = useState(allBooks)
+  const [bookCategoryColor, setBookCategoryColor] = useState(null)
 
   useEffect(() => {
     console.log('allBooks:', allBooks)
@@ -22,7 +24,12 @@ export default function Dashboard() {
           <Categories books={allBooks} setBooks={setBooks} />
         </Grid>
         <Grid item xs={9}>
-          <Books books={books} />
+          <Books
+            books={books}
+            categories={categories}
+            // setBookCategoryColor={setBookCategoryColor}
+            // bookCategoryColor={bookCategoryColor}
+          />
         </Grid>
       </Grid>
     </div>
