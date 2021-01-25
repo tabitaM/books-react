@@ -24,7 +24,7 @@ export default function Navbar() {
   }
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography>BOOKS</Typography>
           <AllBooksButton
@@ -56,6 +56,7 @@ export default function Navbar() {
           </Typography>
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </div>
   )
 }

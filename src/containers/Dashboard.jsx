@@ -20,7 +20,7 @@ export default function Dashboard() {
     <div>
       <Navbar />
       <Grid container spacing={3}>
-        <Grid item xs={3}>
+        <Grid item xs={3} >
           <Categories books={allBooks} setBooks={setBooks} />
         </Grid>
         <Grid item xs={9}>

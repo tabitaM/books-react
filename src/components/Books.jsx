@@ -35,13 +35,13 @@ export default function Books({
   }
   return (
     <div>
-      <GridList cols={4} style={{ width: '98%', height: 'auto' }}>
+      <GridList cols={5} style={{ width: '98%', height: 'auto' }}>
         <GridListTile cols={5} style={{ height: 'auto' }}>
           <ListSubheader>Books</ListSubheader>
         </GridListTile>
         {books
           ? books.map((book) => (
-              <Card style={{ maxWidth: 300, height: 400 }}>
+              <Card style={{ width: '24%', height: 400, margin: '5px' }}>
                 <CardActionArea>
                   <CardMedia
                     style={{ height: 150, margin: 10 }}
@@ -82,7 +82,7 @@ export default function Books({
                       setOpen(true)
                     }}
                   >
-                    Learn more
+                    read more
                   </Button>
                   <Button
                     size="small"
@@ -112,7 +112,7 @@ export default function Books({
         <FadeModal in={open}>
           <div>
             <p id="transition-modal-description">
-              react-transition-group animates me.
+              Book Description :)
             </p>
           </div>
         </FadeModal>
