@@ -9,7 +9,6 @@ export default function Dashboard() {
   const { data: allBooks } = useFetch('books')
   const { data: categories } = useFetch('categories')
   const [books, setBooks] = useState(allBooks)
-  const [bookCategoryColor, setBookCategoryColor] = useState(null)
 
   useEffect(() => {
     console.log('allBooks:', allBooks)
@@ -20,16 +19,11 @@ export default function Dashboard() {
     <div>
       <Navbar />
       <Grid container spacing={3}>
-        <Grid item xs={3} >
+        <Grid item xs={3}>
           <Categories books={allBooks} setBooks={setBooks} />
         </Grid>
         <Grid item xs={9}>
-          <Books
-            books={books}
-            categories={categories}
-            // setBookCategoryColor={setBookCategoryColor}
-            // bookCategoryColor={bookCategoryColor}
-          />
+          <Books books={books} categories={categories} />
         </Grid>
       </Grid>
     </div>

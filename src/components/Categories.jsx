@@ -1,22 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useFetch from '../serices/useFetch'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import EditIcon from '@material-ui/icons/Edit'
 import styled from 'styled-components'
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles({
-  root: {
-    position: "sticky",
-    top: "1rem",
-    minWidth: "275"
-  }
-});
 
 export default function Categories({ books, setBooks }) {
+  const [editable, setEditable] = useState(false)
+
   const { data: allCategories } = useFetch('categories')
-  const classes = useStyles()
 
   const filterByCategory = (category) => {
     const filteredBooks = books.filter(
@@ -26,46 +18,69 @@ export default function Categories({ books, setBooks }) {
   }
 
   return (
-    <div>
-      <div style={{marginTop: '15px'}}>Categories</div> 
-      {/* <ListItem button={true}> */}
-        <AllCategories button={true}
-          primary="All"
-          onClick={() => setBooks(books)}
-        />
-      {/* </ListItem>{' '} */}
+    <CategoriesWrapper>
+      <CategoriesText>Categories</CategoriesText>
+      <AllCategoriesButton
+        button={true}
+        primary="All"
+        onClick={() => setBooks(books)}
+      />
       {allCategories
         ? allCategories.map((category) => (
             <List key={category.id}>
-              {/* <ListItem button={true} disableGutters={true} style={{ borderRadius: 3, height: 40, marginLeft: '5px'}} onClick={() => filterByCategory(category)}> */}
-                <CategoriesListItem className={classes.root}
-                button={true} onClick={() => filterByCategory(category)}
-                  primary={category.name}
-                  style={{
-                    backgroundColor: `${category.color}`
-                  }}
-                />
-              {/* </ListItem> */}
+              <CategoriesListItem
+                onMouseOver={() => setEditable(true)}
+                onMouseLeave={() => setEditable(false)}
+                button={true}
+                onClick={() => filterByCategory(category)}
+                primary={
+                  <span style={{ display: 'flex' }}>
+                    {category.name}{' '}
+                    {editable ? (
+                      <EditIcon style={{ marginLeft: 'auto' }} />
+                    ) : (
+                      ''
+                    )}
+                  </span>
+                }
+                style={{
+                  backgroundColor: `${category.color}`,
+                }}
+              ></CategoriesListItem>
             </List>
           ))
         : ''}
-    </div>
+    </CategoriesWrapper>
   )
 }
 
-const CategoriesListItem = styled(ListItemText)`
-cursor: pointer;
-padding: 7px;
-margin: -10px 0 0 5px;
-border-radius: 5px;
-width: 80%;
+const CategoriesWrapper = styled.div`
+  margin-left: 10px;
 `
 
-const AllCategories = styled(ListItemText)`
-background-color: #785c44;
-cursor: pointer;
-padding: 7px;
-margin: 20px 0 10px 5px;
-border-radius: 5px;
-width: 80%;
+const CategoriesText = styled.h3`
+  margin: 15px 0 0 10px;
+  color: #5e4e42;
+`
+
+const CategoriesListItem = styled(ListItemText)`
+  cursor: pointer;
+  padding: 7px;
+  margin: -10px 0 0 5px;
+  border-radius: 5px;
+  color: white;
+  width: 80%;
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+const AllCategoriesButton = styled(ListItemText)`
+  background-color: #785c44;
+  cursor: pointer;
+  padding: 7px;
+  margin: 20px 0 10px 5px;
+  border-radius: 5px;
+  color: white;
+  width: 80%;
 `

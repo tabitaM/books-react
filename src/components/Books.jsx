@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
-import ListSubheader from '@material-ui/core/ListSubheader'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardActions from '@material-ui/core/CardActions'
@@ -14,34 +13,25 @@ import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import styled from 'styled-components'
 
-export default function Books({
-  books,
-  categories,
-  setBookCategoryColor,
-  bookCategoryColor,
-}) {
-  const [open, setOpen] = React.useState(false)
+export default function Books({ books, categories }) {
+  const [open, setOpen] = useState(false)
 
   const handleClose = () => {
     setOpen(false)
   }
 
-  console.log('Categories in Books: ', categories)
-  const getBookCategoryColor = (book) => {
-    const category = categories
-      ? categories.find((category) => book.categoryId === category.id)
-      : ''
-    setBookCategoryColor(category.color)
-  }
   return (
-    <div>
+    <BooksWrapper>
       <GridList cols={5} style={{ width: '98%', height: 'auto' }}>
         <GridListTile cols={5} style={{ height: 'auto' }}>
-          <ListSubheader>Books</ListSubheader>
+          <BooksText>Books</BooksText>
         </GridListTile>
         {books
           ? books.map((book) => (
-              <Card style={{ width: '24%', height: 400, margin: '5px' }}>
+              <Card
+                key={book.id}
+                style={{ width: '24%', height: 400, margin: '5px' }}
+              >
                 <CardActionArea>
                   <CardMedia
                     style={{ height: 150, margin: 10 }}
@@ -49,32 +39,25 @@ export default function Books({
                     title={book.title}
                   />
                   <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="h2"
-                      style={{ fontSize: 15, fontWeight: 'bold' }}
-                    >
+                    <CardTitle gutterBottom variant="h5" component="h2">
                       {book.title}
-                    </Typography>
-                    <Typography
+                    </CardTitle>
+                    <CardDescription
                       variant="body2"
                       color="textSecondary"
                       component="p"
-                      style={{
-                        fontSize: 13,
-                        overflow: 'hidden',
-                        lineHeight: '1.2em',
-                        height: '3.6em',
-                        // textOverflow: 'ellipsis',
-                        // whiteSpace: 'nowrap',
-                      }}
                     >
                       {book.description}
-                    </Typography>
+                    </CardDescription>
                   </CardContent>
                 </CardActionArea>
-                <CardActions>
+                <CardActions
+                  style={{
+                    margin: '0px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
                   <Button
                     size="small"
                     color="primary"
@@ -84,13 +67,16 @@ export default function Books({
                   >
                     read more
                   </Button>
-                  <Button
+                  <CardCategoryName
                     size="small"
-                    onClick={() => getBookCategoryColor(book)}
-                    color={bookCategoryColor}
+                    style={{
+                      backgroundColor: `${
+                        categories ? categories[book.categoryId].color : ''
+                      }`,
+                    }}
                   >
-                    categoryName
-                  </Button>
+                    {categories ? categories[book.categoryId].name : ''}
+                  </CardCategoryName>
                 </CardActions>
               </Card>
             ))
@@ -111,15 +97,49 @@ export default function Books({
       >
         <FadeModal in={open}>
           <div>
-            <p id="transition-modal-description">
-              Book Description :)
-            </p>
+            <p id="transition-modal-description">Book Description :)</p>
           </div>
         </FadeModal>
       </DescriptionModal>
-    </div>
+    </BooksWrapper>
   )
 }
+
+const CardCategoryName = styled.p`
+  width: 80px;
+  text-align: center;
+  color: black;
+  border-radius: 5px;
+`
+
+const BooksText = styled.h3`
+  margin: 15px 0 12px 5px;
+  color: #5e4e42;
+`
+
+const CardTitle = styled(Typography)`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  font-weight: bold;
+`
+
+const CardDescription = styled(Typography)`
+  display: -webkit-box;
+  margin: 0 auto;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #785c44;
+  margin-bottom: 8px;
+  font-size: 13px;
+`
+
+const BooksWrapper = styled.div``
 
 const DescriptionModal = styled(Modal)`
   display: flex;
